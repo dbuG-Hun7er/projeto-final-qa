@@ -5,11 +5,11 @@
 ![Mocha](https://img.shields.io/badge/mocha-api%20tests-brown)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-> **Status CI (GitHub Actions)**  
-> Substitua `SEU_USUARIO` e `SEU_REPO` nos badges abaixo:
+> ✅ **Status CI (GitHub Actions)**  
+> Os badges abaixo funcionam quando você criar os workflows em `.github/workflows/`:
 >
-> ![UI Tests](https://github.com/dbuG-Hun7er/projeto-final-qa/tree/main/cypress)
-> ![API Tests](https://github.com/dbuG-Hun7er/projeto-final-qa/tree/main/api-tests)
+> ![UI Tests](https://github.com/dbuG-Hun7er/projeto-final-qa/actions/workflows/ui-tests.yml/badge.svg)
+> ![API Tests](https://github.com/dbuG-Hun7er/projeto-final-qa/actions/workflows/api-tests.yml/badge.svg)
 
 Projeto final de **Engenharia de Qualidade de Software**, com foco em:
 - **Planejamento e execução** de testes por US (US001/US002/US003)
@@ -19,7 +19,7 @@ Projeto final de **Engenharia de Qualidade de Software**, com foco em:
 
 ---
 
-##  Escopo por Histórias de Usuário
+## 📌 Escopo por Histórias de Usuário
 
 ### US001 — Carrinho
 - Limite **10** unidades do mesmo produto
@@ -41,7 +41,7 @@ Projeto final de **Engenharia de Qualidade de Software**, com foco em:
 
 ---
 
-##  Arquitetura (Clean & Escalável)
+## 🧱 Arquitetura (Clean & Escalável)
 
 Princípios:
 - **Specs pequenos** (legíveis e focados)
@@ -74,49 +74,85 @@ api-tests/
   test/
     us003-coupons.spec.js
   package.json
+```
 
- Requisitos
-Node.js 18+
-NPM
-Como rodar (UI — Cypress)
-Instalar dependências
+---
+
+## ✅ Requisitos
+- Node.js **18+**
+- NPM
+
+---
+
+## 🚀 Como rodar (UI — Cypress)
+
+### Instalar dependências
+```bash
 npm install
-Abrir Cypress (interativo)
+```
+
+### Abrir Cypress (interativo)
+```bash
 npm run cy:open
-Rodar Cypress (headless)
+```
+
+### Rodar Cypress (headless)
+```bash
 npm run cy:run
+```
 
-Relatórios (Mochawesome)
+---
 
-Após executar npm run cy:run, os relatórios ficam em:
+## 📄 Relatórios (Mochawesome)
 
+Após executar `npm run cy:run`, os relatórios ficam em:
+
+```text
 cypress/reports/
+```
 
 Inclui:
+- HTML + JSON
+- evidências (screenshots embutidas quando falha)
 
-HTML + JSON
-evidências (screenshots embutidas quando falha)
+---
 
-Como rodar (API — Supertest/Mocha)
-Instalar dependências da API
+## 🔌 Como rodar (API — Supertest/Mocha)
+
+### Instalar dependências da API
+```bash
 cd api-tests
 npm install
+```
 
-Variáveis de ambiente (Basic Auth + Base URL)
-PowerShell (sessão atual)
+### Variáveis de ambiente (Basic Auth + Base URL)
+
+#### PowerShell (sessão atual)
+```powershell
 $env:COUPONS_BASE_URL="https://SUA-URL-AQUI"
 $env:COUPONS_USER="admin_ebac"
 $env:COUPONS_PASS="SUA_SENHA_AQUI"
+```
 
-CMD
+#### CMD
+```bat
 set COUPONS_BASE_URL=https://SUA-URL-AQUI
 set COUPONS_USER=admin_ebac
 set COUPONS_PASS=SUA_SENHA_AQUI
+```
 
+### Rodar os testes (na raiz do projeto)
+```bash
+npm run api:test
+```
 
-Scripts
+---
 
-Exemplo esperado no package.json (raiz):
+## 🧪 Scripts
+
+Exemplo esperado no `package.json` (raiz):
+
+```json
 {
   "scripts": {
     "cy:open": "cypress open",
@@ -124,45 +160,55 @@ Exemplo esperado no package.json (raiz):
     "api:test": "npm --prefix api-tests test"
   }
 }
+```
 
-Evidências e Bug Report
+---
+
+## 🐞 Evidências e Bug Report
+
 Evidências UI:
-cypress/screenshots/
-cypress/videos/
+- `cypress/screenshots/`
+- `cypress/videos/`
+
 Bug report:
-usar o template do projeto (ex.: Bug_Report.pdf)
-registrar: passos, resultado atual, esperado, ambiente, gravidade/prioridade, evidência
-CI/CD (GitHub Actions)
+- usar o template do projeto (ex.: `Bug_Report.pdf`)
+- registrar: passos, resultado atual, esperado, ambiente, gravidade/prioridade, evidência
+
+---
+
+## 🔁 CI/CD (GitHub Actions)
 
 Este projeto suporta pipeline separado para:
+- **UI tests (Cypress)**
+- **API tests (Mocha/Supertest)**
 
-UI tests (Cypress)
-API tests (Mocha/Supertest)
+Arquivos esperados:
+- `.github/workflows/ui-tests.yml`
+- `.github/workflows/api-tests.yml`
 
-Se você quiser, eu já te gero os 2 workflows prontos:
+---
 
-.github/workflows/ui-tests.yml
-.github/workflows/api-tests.yml
+## 🧾 Convenção de commits (sugestão)
 
-Assim os badges acima passam a funcionar automaticamente.
-
-Convenção de commits (sugestão)
-test: novo teste / melhoria
-fix: correção
-chore: config/infra
-docs: documentação
+- `test:` novo teste / melhoria
+- `fix:` correção
+- `chore:` config/infra
+- `docs:` documentação
 
 Exemplos:
+- `test: add US001 cart limit coverage`
+- `fix: stabilize login selectors`
+- `chore: configure mochawesome reporter`
 
-test: add US001 cart limit coverage
-fix: stabilize login selectors
-chore: configure mochawesome reporter
-Roadmap
- Cobertura mínima (feliz + alternativo/negativo) para US001/US002/US003
- Intercepts para estabilidade quando necessário
- CI com GitHub Actions (UI + API)
- Padronizar massa de dados (fixtures/factory)
+---
 
- Autor
+## 🗺 Roadmap
+- [ ] Cobertura mínima (feliz + alternativo/negativo) para US001/US002/US003
+- [ ] Intercepts para estabilidade quando necessário
+- [ ] CI com GitHub Actions (UI + API)
+- [ ] Padronizar massa de dados (fixtures/factory)
 
+---
+
+## 👤 Autor
 Lucas — QA Automation (Cypress / API Testing)
