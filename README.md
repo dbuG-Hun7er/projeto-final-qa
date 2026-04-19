@@ -8,8 +8,8 @@
 > ✅ **Status CI (GitHub Actions)**  
 > Os badges abaixo funcionam quando você criar os workflows em `.github/workflows/`:
 >
-> ![UI Tests](https://github.com/dbuG-Hun7er/projeto-final-qa/actions/workflows/ui-tests.yml/badge.svg)
-> ![API Tests](https://github.com/dbuG-Hun7er/projeto-final-qa/actions/workflows/api-tests.yml/badge.svg)
+> ![UI Tests](https://github.com/dbuG-Hun7er/projeto-final-qa/tree/main/cypress)
+> ![API Tests](https://github.com/dbuG-Hun7er/projeto-final-qa/tree/main/api-tests)
 
 Projeto final de **Engenharia de Qualidade de Software**, com foco em:
 - **Planejamento e execução** de testes por US (US001/US002/US003)
