@@ -1,0 +1,10 @@
+{
+  "validUser": {
+    "email": "teste@ebac.com.br",
+    "password": "123456"
+  },
+  "invalidUser": {
+    "email": "teste@ebac.com.br",
+    "password": "senha_errada"
+  }
+}
