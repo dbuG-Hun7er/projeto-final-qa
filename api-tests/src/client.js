@@ -1,15 +1,26 @@
 const request = require("supertest");
+require("dotenv").config();
 
 const BASE_URL = process.env.COUPONS_BASE_URL;
 const USER = process.env.COUPONS_USER;
 const PASS = process.env.COUPONS_PASS;
 
-if (!BASE_URL || !USER || !PASS) {
-  throw new Error("Defina COUPONS_BASE_URL, COUPONS_USER e COUPONS_PASS no ambiente.");
-}
+const missingConfig = [
+  ["COUPONS_BASE_URL", BASE_URL],
+  ["COUPONS_USER", USER],
+  ["COUPONS_PASS", PASS],
+]
+  .filter(([, value]) => !value)
+  .map(([name]) => name);
 
-const api = () =>
-  request(BASE_URL)
-    .auth(USER, PASS); // Basic Auth (supertest)
+const hasApiConfig = () => missingConfig.length === 0;
 
-module.exports = { api };
+const api = () => {
+  if (!hasApiConfig()) {
+    throw new Error(`Config ausente para API: ${missingConfig.join(", ")}`);
+  }
+
+  return request(BASE_URL).auth(USER, PASS);
+};
+
+module.exports = { api, hasApiConfig, missingConfig };

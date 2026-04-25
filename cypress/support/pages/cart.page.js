@@ -4,5 +4,5 @@ export const CartPage = {
   qtyInput: 'input.qty',
   updateCartBtn: 'button[name="update_cart"]',
   notice: ".woocommerce-message, .woocommerce-error, .alert, [role='alert']",
-  total: ".order-total .amount, .cart_totals .amount"
+  cartTitle: ".entry-title",
 };

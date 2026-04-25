@@ -3,11 +3,11 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "test": "mocha \"test/**/*.spec.js\" --reporter spec"
+    "test": "mocha \"tests/**/*.spec.js\" --reporter spec"
   },
   "devDependencies": {
-    "mocha": "^10.0.0",
     "chai": "^4.4.1",
+    "mocha": "^10.0.0",
     "supertest": "^7.0.0"
   }
 }
