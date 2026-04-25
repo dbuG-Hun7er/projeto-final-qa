@@ -3,7 +3,7 @@
  * ─────────────────────────────────────────────────────────────────
  * Teste de performance – GET /coupons
  *
- * Configurações (conforme especificação do TCC):
+ * Configurações (conforme especificação):
  *   VUs      : 20
  *   Duração  : 2 minutos
  *   Ramp-up  : 20 segundos (0 → 20 VUs)
@@ -18,14 +18,14 @@
  *   export COUPONS_USER="user1_ebac"
  *   export COUPONS_PASS="psw!ebac@test"
  *   k6 run performance/k6/coupons_get.js
- * ─────────────────────────────────────────────────────────────────
+ *
  */
 
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { Counter, Rate, Trend } from 'k6/metrics';
 
-// ── Massa de dados (conforme especificação) ───────────────────────
+
 const USERS = [
   { user: 'user1_ebac', pass: 'psw!ebac@test' },
   { user: 'user2_ebac', pass: 'psw!ebac@test' },
@@ -34,7 +34,7 @@ const USERS = [
   { user: 'user5_ebac', pass: 'psw!ebac@test' },
 ];
 
-// ── Configurações do teste ────────────────────────────────────────
+
 export const options = {
   stages: [
     { duration: '20s', target: 20 },  // ramp-up: 0 → 20 VUs em 20s
@@ -48,12 +48,11 @@ export const options = {
   },
 };
 
-// ── Métricas customizadas ─────────────────────────────────────────
 const couponErrors   = new Counter('coupon_errors');
 const couponDuration = new Trend('coupon_request_duration', true);
 const successRate    = new Rate('coupon_success_rate');
 
-// ── Helpers ───────────────────────────────────────────────────────
+
 function getBaseUrl() {
   const url = __ENV.COUPONS_BASE_URL;
   if (!url) throw new Error('COUPONS_BASE_URL não definida. Exporte antes de rodar o k6.');
@@ -66,16 +65,16 @@ function pickUser(vuId) {
 
 function buildAuthHeader(user, pass) {
   const token = `${user}:${pass}`;
-  // btoa não existe no k6 – usa encoding manual via encoding module ou base64 simples
+ 
   return `Basic ${btoa(token)}`;
 }
 
-// btoa polyfill para k6 (usa Buffer do runtime k6)
+
 function btoa(str) {
   return encoding.b64encode(str);
 }
 
-// ── Setup – valida variáveis antes de começar ─────────────────────
+
 export function setup() {
   const baseUrl = getBaseUrl();
   const creds   = pickUser(0);
@@ -95,7 +94,7 @@ export function setup() {
   return { baseUrl };
 }
 
-// ── Cenário principal ─────────────────────────────────────────────
+// Cenário principal
 export default function (data) {
   // Rotação de usuários por VU
   const creds = pickUser(__VU);
@@ -132,7 +131,7 @@ export default function (data) {
   sleep(1);
 }
 
-// ── Teardown – sumário final ──────────────────────────────────────
+
 export function teardown(data) {
   console.log(`[teardown] Teste finalizado. URL: ${data.baseUrl}/coupons`);
 }

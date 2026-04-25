@@ -3,7 +3,7 @@
  * ─────────────────────────────────────────────────────────────────
  * Teste de performance – Login (autenticação via WooCommerce)
  *
- * Configurações (conforme especificação do TCC):
+ * Configurações (conforme especificação):
  *   VUs      : 20
  *   Duração  : 2 minutos
  *   Ramp-up  : 20 segundos (0 → 20 VUs)
@@ -24,7 +24,7 @@ import http from 'k6/http';
 import { check, group, sleep } from 'k6';
 import { Counter, Rate, Trend } from 'k6/metrics';
 
-// ── Massa de dados (conforme especificação do TCC) ────────────────
+
 const USERS = [
   { username: 'user1_ebac', password: 'psw!ebac@test' },
   { username: 'user2_ebac', password: 'psw!ebac@test' },
@@ -33,7 +33,6 @@ const USERS = [
   { username: 'user5_ebac', password: 'psw!ebac@test' },
 ];
 
-// ── Configurações do teste ────────────────────────────────────────
 export const options = {
   stages: [
     { duration: '20s', target: 20 },  // ramp-up: 0 → 20 VUs em 20s
@@ -48,12 +47,11 @@ export const options = {
   },
 };
 
-// ── Métricas customizadas ─────────────────────────────────────────
+
 const loginErrors      = new Counter('login_errors');
 const loginDuration    = new Trend('login_duration_ms', true);
 const loginSuccessRate = new Rate('login_success_rate');
 
-// ── Helpers ───────────────────────────────────────────────────────
 function getSiteUrl() {
   const url = __ENV.SITE_URL || 'http://lojaebac.ebaconline.art.br';
   return url.replace(/\/$/, '');
@@ -63,7 +61,7 @@ function pickUser(vuId) {
   return USERS[vuId % USERS.length];
 }
 
-// ── Setup ─────────────────────────────────────────────────────────
+
 export function setup() {
   const siteUrl = getSiteUrl();
   console.log(`[setup] Alvo: ${siteUrl}/wp-login.php`);
@@ -72,7 +70,7 @@ export function setup() {
   return { siteUrl };
 }
 
-// ── Cenário principal ─────────────────────────────────────────────
+
 export default function (data) {
   const creds   = pickUser(__VU);
   const siteUrl = data.siteUrl;
@@ -89,12 +87,12 @@ export default function (data) {
       'página de login acessível (200)': (r) => r.status === 200,
     });
 
-    // Extrai o nonce do formulário de login (WordPress padrão)
+    
     let nonce = '';
     const nonceMatch = pageRes.body && pageRes.body.match(/name="woocommerce-login-nonce"\s+value="([^"]+)"/);
     if (nonceMatch) nonce = nonceMatch[1];
 
-    // Passo 2: POST credenciais
+  
     const loginUrl = `${siteUrl}/minha-conta/`;
     const payload  = {
       username:                    creds.username,
