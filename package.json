@@ -1,14 +1,17 @@
 {
-  "name": "cypress",
+  "name": "projeto-final-qa",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
+  "description": "Projeto final QA Automation com Cypress (UI) e Supertest/Mocha (API).",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --headless",
+    "ui:test": "npm run cy:run",
+    "api:test": "npm --prefix api-tests test",
+    "perf:coupons": "k6 run performance/k6/coupons_get.js",
+    "perf:login": "k6 run performance/k6/login_smoke.js",
+    "test": "npm run ui:test && npm run api:test"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
     "cypress": "^15.14.0",
     "cypress-mochawesome-reporter": "^4.0.2",

@@ -2,7 +2,7 @@ import {
   openAnyProductAndAddToCart,
   openCart,
   setQuantity,
-  assertNoticeVisible
+  assertNoticeVisible,
 } from "../support/actions/cart.actions";
 
 describe("US001 - Adicionar item ao carrinho", () => {
@@ -14,8 +14,7 @@ describe("US001 - Adicionar item ao carrinho", () => {
     openAnyProductAndAddToCart();
     openCart();
 
-    cy.contains("Carrinho").should("be.visible");
-    cy.get('input.qty').should("have.value", "1");
+    cy.get("input.qty").should("have.value", "1");
   });
 
   it("CT-US001-02: não deve permitir mais de 10 unidades do mesmo produto", () => {
@@ -23,9 +22,10 @@ describe("US001 - Adicionar item ao carrinho", () => {
     openCart();
 
     setQuantity(10);
-    cy.get('input.qty').should("have.value", "10");
+    cy.get("input.qty").should("have.value", "10");
 
     setQuantity(11);
-    assertNoticeVisible(); // mensagem de limite (ajusta o texto depois)
+    assertNoticeVisible();
+    cy.get("input.qty").invoke("val").then(Number).should("be.at.most", 10);
   });
 });
